@@ -12,7 +12,11 @@ namespace Calculator
         {
             string expr = "2 + 6"; //N:2 OP:ADD N:6 => OP(ADD)[N(2);N(6)]
 
-            new Lexer.Lexer().Run();
+            List<Lexer.Tokens.Token> tokens = new Lexer.Lexer().Tokenize(expr).ToList();
+
+            foreach (Lexer.Tokens.Token token in tokens)
+                Console.WriteLine($"Token(type: {token.Type})");
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

@@ -7,7 +7,7 @@ namespace Calculator.Lexer
     class Lexer
     {
         // Приватный словарь строка операции - тип операции. Используется для парсинга операций и генерации регулярки для парсинга операций
-        static Dictionary<string, OperationType> OpTypes =
+        private static Dictionary<string, OperationType> OpTypes =
             new Dictionary<string, OperationType>()
             {
                 [@"+"] = OperationType.Add,
@@ -17,7 +17,7 @@ namespace Calculator.Lexer
             };
 
         // Регулярки, описывающие лексему
-        static Dictionary<TokenType, Regex> regexes = 
+        private static Dictionary<TokenType, Regex> regexes = 
             new Dictionary<TokenType, Regex>()
             {
                 //Регулярка генерируется исходя из токенов расположенных в словаре OpTypes. Не трогать
@@ -27,7 +27,7 @@ namespace Calculator.Lexer
             };
 
         //Функции, вызываемые при обнаружении токена
-        static Dictionary<TokenType, Func<string, Token>> creators =
+        private static Dictionary<TokenType, Func<string, Token>> creators =
             new Dictionary<TokenType, Func<string, Token>>()
             {
                 [TokenType.Operation] = (s) => new OperationToken() { Type = TokenType.Operation, OperationType = OpTypes[s] },
@@ -45,9 +45,8 @@ namespace Calculator.Lexer
         /// <param name="text">Текст который необходимо парсить</param>
         /// <returns>Энумерация лексем</returns>
         /// <exception cref="Exception">Исключение выкидывается в случаее если не обнаруженна подходящая лексема</exception>
-        IEnumerable<Token> Tokenize(string text)
+        public IEnumerable<Token> Tokenize(string text)
         {
-            
             //Убирает пробелы в тексте
             var remainingText = text.TrimStart();
             while (remainingText != "")
@@ -74,13 +73,6 @@ namespace Calculator.Lexer
                 // откусываем распознанный кусок и пробелы после него
                 remainingText = remainingText.Substring(bestMatch.matchLen).TrimStart();
             }
-        }
-
-        public void Run()
-        {
-            var text = " 778994 - 45.25 ";
-            foreach (var token in Tokenize(text))
-                Console.WriteLine(token.Type);
         }
     }
 }

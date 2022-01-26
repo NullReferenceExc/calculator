@@ -1,6 +1,8 @@
 ﻿using Calculator.Lexer.Tokens;
 using Calculator.Lexer.Tokens.Operations;
 using System.Text.RegularExpressions;
+using static Calculator.Lexer.Tokens.Operations.OperationToken;
+using static Calculator.Lexer.Tokens.Token;
 
 namespace Calculator.Lexer
 {
@@ -21,7 +23,7 @@ namespace Calculator.Lexer
             new Dictionary<TokenType, Regex>()
             {
                 //Регулярка генерируется исходя из токенов расположенных в словаре OpTypes. Не трогать
-                [TokenType.Operation] = new Regex(string.Concat("^", string.Join('|', OpTypes.Keys.Select((elem, index) => $"({Regex.Escape(elem)})"))), RegexOptions.Compiled),
+                [TokenType.Operation] = new Regex(string.Concat("^(", string.Join('|', OpTypes.Keys.Select((elem, index) => $@"({Regex.Escape(elem)})")), ")")),
 
                 [TokenType.Number] = new Regex(@"^(\-)?[0-9]+(\.[0-9]+)?", RegexOptions.Compiled)
             };
@@ -30,12 +32,12 @@ namespace Calculator.Lexer
         private static Dictionary<TokenType, Func<string, Token>> creators =
             new Dictionary<TokenType, Func<string, Token>>()
             {
-                [TokenType.Operation] = (s) => new OperationToken() { Type = TokenType.Operation, OperationType = OpTypes[s] },
+                [TokenType.Operation] = (s) => new OperationToken(OpTypes[s]) { Type = TokenType.Operation },
 
                 [TokenType.Number] = (s) =>
                     s.Contains(".") ?
-                        new ValueToken<double>() { Type = TokenType.Number, Value = double.Parse(s.Replace('.', ',')) }
-                      : new ValueToken<int>() { Type = TokenType.Number, Value = int.Parse(s) }
+                        new ValueToken<double>(double.Parse(s.Replace('.', ','))) { Type = TokenType.Number }
+                      : new ValueToken<int>(int.Parse(s)) { Type = TokenType.Number}
                 
             };
 

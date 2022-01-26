@@ -8,6 +8,17 @@ namespace Calculator.Lexer.Tokens
 {
     public abstract class Token
     {
+        public enum TokenType
+        {
+            /// <summary>
+            /// Простая математическая операция(функции сюда не входят)
+            /// </summary>
+            Operation,
+            /// <summary>
+            /// Число
+            /// </summary>
+            Number
+        };
         public TokenType Type;
     }
 }

@@ -9,4 +9,8 @@
     <RootNamespace>cscalc</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Lexer\Tokens\Operations\" />
+  </ItemGroup>
+
 </Project>

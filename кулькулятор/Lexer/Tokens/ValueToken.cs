@@ -11,6 +11,12 @@ namespace Calculator.Lexer.Tokens
         /// <summary>
         /// Значение
         /// </summary>
-        public T Value { get; set; }
+        private T Value;
+        public ValueToken(T value)
+        {
+            Value = value;
+        }
+        public T GetValue() =>
+            Value;
     }
 }

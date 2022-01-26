@@ -9,17 +9,6 @@ namespace Calculator.Parser
 {
     internal class Parser
     {
-        public abstract class Node
-        {
 
-        }
     }
 }
-
-//2 + 2 + 2
-/*
- Ищет * или /
- Ищет + или -
-  OpNode {2, 2, +} + 2
-  OpNode { OpNode {2, 2, + }, 2, +}
- */
